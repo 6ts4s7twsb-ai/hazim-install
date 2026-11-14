@@ -1,6 +1,6 @@
 ---
 name: installhazim
-description: Installation guidée chez un client de Hazim Systems, une seule fois par cabinet — vérifie l'ordinateur, enregistre les autorisations de Claude, ouvre Chrome, crée dans Google Cloud le projet, active Drive et Gmail, prépare l'écran de connexion Google et la clé de connexion, fait coller les clés dans Railway, vérifie la connexion Google dans l'application, installe le plugin pfc-cabinet et planifie le contrôle du matin. L'application doit déjà être en ligne. Utiliser pour "/installhazim", "installe chez le client", "installation hazim", "configure google pour le client".
+description: Installation guidée chez un client de Hazim Systems, une seule fois par cabinet — vérifie l'ordinateur, enregistre les autorisations de Claude, ouvre Chrome, crée dans Google Cloud le projet, active Drive et Gmail, prépare l'écran de connexion Google et la clé de connexion (Hamza la copie dans son Railway), vérifie la connexion Google dans l'application, installe le plugin pfc-cabinet et planifie le contrôle du matin. L'application doit déjà être en ligne. Utiliser pour "/installhazim", "installe chez le client", "installation hazim", "configure google pour le client".
 ---
 
 # /installhazim — installation chez le client
@@ -16,11 +16,13 @@ description: Installation guidée chez un client de Hazim Systems, une seule foi
 ## Règles de sécurité (toujours)
 
 1. **Jamais de mot de passe, jamais de code reçu par SMS, jamais de clé secrète** tapés ou lus par toi. Le client se
-   connecte lui-même (Google, Railway) et colle lui-même les clés.
+   connecte lui-même à Google. **Railway, c'est Hamza seul**, sur son propre ordinateur ou téléphone : le client n'y a
+   pas accès et tu ne l'ouvres jamais sur l'ordinateur du client.
 2. **Quand Google affiche la fenêtre avec la clé secrète** (étape 7) : ne fais **aucune** capture
-   (`take_snapshot`, `take_screenshot`) de cet onglet tant que le client n'a pas dit qu'il a collé les clés et fermé
-   la fenêtre. La clé secrète ne doit jamais passer par toi.
-3. **Les cases d'accord** (« I agree… », conditions de Google ou de Railway) : c'est le client qui coche. Tu dis
+   (`take_snapshot`, `take_screenshot`) de cet onglet tant que Hamza n'a pas dit qu'il a copié les clés et fermé
+   la fenêtre. La clé secrète ne doit jamais passer par toi. Ne propose pas « Download JSON » : la clé resterait dans
+   un fichier sur l'ordinateur du client.
+3. **Les cases d'accord** (« I agree… », conditions de Google) : c'est le client qui coche. Tu dis
    laquelle et où.
 4. Rien n'est payant dans cette installation. Si une page demande une carte bancaire ou un paiement : arrête-toi et
    préviens Hamza.
@@ -117,26 +119,21 @@ C'est ce que voit l'équipe quand elle clique « Se connecter avec Google ».
    - `<adresse_app>/local-api/drive/callback`
    - `<adresse_app>/local-api/google/callback`
 4. Clique « Create ». **À partir d'ici, ne regarde plus cet onglet** (règle de sécurité 2).
-5. Dis : « Google affiche deux clés : « Client ID » et « Client secret ». Gardez cette fenêtre ouverte. On va les
-   coller dans Railway. »
+5. Dis : « Google affiche deux clés : « Client ID » et « Client secret ». Gardez cette fenêtre ouverte : Hamza va
+   les copier. »
 
-## Étape 8 — Coller les clés dans Railway
+## Étape 8 — Hamza copie les clés dans son Railway
 
-1. Ouvre un **nouvel onglet** : `new_page` sur `https://railway.com/dashboard`.
-2. Si Railway demande de se connecter : « Connectez-vous à Railway vous-même (le compte où l'application est
-   hébergée). Dites "c'est fait". »
-3. Dis, une ligne à la fois :
-   - « Cliquez sur le projet de l'application, puis sur la case du service, puis sur l'onglet « Variables ». »
-   - « Cliquez « New Variable ». Nom : `PFC_GOOGLE_CLIENT_ID`. Valeur : collez le « Client ID » de Google.
-     Cliquez « Add ». »
-   - « Encore « New Variable ». Nom : `PFC_GOOGLE_CLIENT_SECRET`. Valeur : collez le « Client secret ». « Add ». »
-   - « Encore « New Variable ». Nom : `PFC_DIRECTEUR_EMAIL`. Valeur : <email_directeur>. « Add ». »
-   - « En haut, une barre violette apparaît. Cliquez dessus, puis « Deploy ». »
-4. Quand le client dit « c'est fait » : regarde **seulement l'onglet Railway** (`select_page` puis `take_snapshot`).
-   Vérifie que les trois noms apparaissent dans la liste. Les valeurs sont cachées (`*******`) : ne clique pas sur
-   l'œil.
-5. Dis : « Fermez maintenant la fenêtre Google avec les clés (bouton « OK »). »
-6. Attends 3 minutes que Railway redémarre (vérifie avec `curl` que `<adresse_app>/login` répond `200`).
+Cette étape est pour **Hamza**, pas pour le client. Le client attend.
+1. Dis à Hamza : « Google affiche « Client ID » et « Client secret ». Copiez-les vous-même dans **votre** Railway
+   (sur votre ordinateur ou votre téléphone), dans le service de l'application du cabinet, onglet « Variables » :
+   - `PFC_GOOGLE_CLIENT_ID` = le Client ID
+   - `PFC_GOOGLE_CLIENT_SECRET` = le Client secret
+   - `PFC_DIRECTEUR_EMAIL` = <email_directeur>
+   Puis « Deploy ». Dites "c'est fait". »
+2. Quand Hamza dit « c'est fait » : dis au client « Cliquez « OK » pour fermer la fenêtre Google avec les clés. »
+3. Attends que l'application redémarre : toutes les 30 s, `curl` sur `<adresse_app>/login`, jusqu'à `200`
+   (5 minutes au plus). Tu ne peux pas voir Railway : c'est l'étape 9 qui vérifie que les clés sont prises.
 
 ## Étape 9 — Publier et vérifier la connexion Google
 
@@ -144,11 +141,12 @@ C'est ce que voit l'équipe quand elle clique « Se connecter avec Google ».
    « Publish app », puis « Confirm ». Le bouton devient « Back to testing » : c'est publié.
    (Si « Publish app » est grisé : l'étape 6.6 n'est pas enregistrée ; refais-la.)
 2. `navigate_page` sur `<adresse_app>/login`, `take_snapshot`. Le bouton « Se connecter avec Google » doit être là.
-   Absent → les clés ne sont pas prises : refais l'étape 8.
+   Absent → les clés ne sont pas encore prises : demande à Hamza de vérifier les trois noms dans son Railway et
+   d'attendre la fin du déploiement, puis recharge la page.
 3. Dis : « Cliquez « Se connecter avec Google » et choisissez <email_directeur>. Si Google dit « Google hasn't
    verified this app », cliquez « Advanced », puis « Go to PFC du Nord ». Puis « Continue ». Dites "c'est fait". »
 4. `take_snapshot` : la page « Tâches » doit s'afficher. « Compte non autorisé » → l'adresse choisie n'est pas
-   exactement <email_directeur> : vérifie la variable `PFC_DIRECTEUR_EMAIL` dans Railway.
+   exactement <email_directeur> : demande à Hamza de vérifier `PFC_DIRECTEUR_EMAIL` dans son Railway.
 
 ## Étape 10 — Le plugin du cabinet (factures WhatsApp et contrôle du matin)
 
@@ -181,7 +179,7 @@ Dis : « Le contrôle du matin marche si l'ordinateur est allumé et Claude ouve
 | Autorisations de Claude | ✅ / ❌ |
 | Projet Google, Drive, Gmail | ✅ / ❌ (ID du projet) |
 | Écran et clé de connexion Google | ✅ / ❌ |
-| Clés dans Railway | ✅ / ❌ |
+| Clés copiées par Hamza dans Railway | ✅ / ❌ |
 | Connexion Google dans l'application | ✅ / ❌ |
 | Plugin pfc-cabinet | ✅ / ❌ |
 | Contrôle du matin (8 h) | ✅ / ❌ |

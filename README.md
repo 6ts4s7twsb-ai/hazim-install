@@ -3,7 +3,7 @@
 Plugin Claude de **Hazim Systems**. Une seule commande, **`/installhazim`**, installe l'application PFC chez un
 cabinet, avec le client à côté (ou en appel). Claude parle en français simple et dit sur quel bouton cliquer.
 
-L'application doit **déjà être en ligne** (Railway). `/installhazim` fait le reste :
+L'application doit **déjà être en ligne** sur le Railway de Hamza. Le client n'a jamais besoin de Railway. `/installhazim` fait le reste :
 
 | Étape | Qui |
 |---|---|
@@ -14,7 +14,7 @@ L'application doit **déjà être en ligne** (Railway). `/installhazim` fait le 
 | 5. Projet Google, accès Drive et Gmail | Claude |
 | 6. Écran de connexion Google | Claude ; **le client** coche la case d'accord de Google |
 | 7. Clé de connexion Google | Claude |
-| 8. Coller les clés dans Railway | **Le client** (Claude ne voit jamais la clé secrète) |
+| 8. Copier les clés Google dans Railway | **Hamza**, dans son propre Railway (le client n'y a pas accès ; Claude ne voit jamais la clé secrète) |
 | 9. Publier et tester « Se connecter avec Google » | Claude, puis le client se connecte |
 | 10. Plugin du cabinet (`pfc-cabinet`) | Claude |
 | 11. Contrôle du matin à 8 h | Claude |
@@ -43,7 +43,8 @@ sa fenêtre Chrome, vérifier l'adresse de l'application, installer le plugin du
 ## Ce que Claude ne fait jamais
 
 - Taper ou lire un mot de passe, un code SMS ou la clé secrète Google.
-- Cocher une case d'accord (conditions de Google, de Railway) à la place du client.
+- Cocher une case d'accord (conditions de Google) à la place du client.
+- Ouvrir Railway sur l'ordinateur du client.
 - Payer quoi que ce soit : tout est gratuit.
 
 ## Reprendre une installation

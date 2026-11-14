@@ -1,6 +1,8 @@
 {
   "name": "hazim-install",
-  "version": "1.0.0",
-  "description": "Installation guidée chez un client (Hazim Systems) : Chrome, autorisations de Claude, Google Cloud (Drive, Gmail, connexion Google), variables Railway, plugin pfc-cabinet et contrôle du matin.",
-  "author": { "name": "Hamza Hazim" }
+  "version": "1.0.1",
+  "description": "Installation guidée chez un client (Hazim Systems) : Chrome, autorisations de Claude, Google Cloud (Drive, Gmail, connexion Google), clés copiées par Hamza dans son Railway, plugin pfc-cabinet et contrôle du matin.",
+  "author": {
+    "name": "Hamza Hazim"
+  }
 }
