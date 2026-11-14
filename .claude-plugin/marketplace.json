@@ -1,0 +1,8 @@
+{
+  "name": "hazim-install",
+  "owner": { "name": "Hamza Hazim" },
+  "plugins": [
+    { "name": "hazim-install", "source": "./", "description": "/installhazim : installation guidée de l'application PFC chez un client" }
+  ],
+  "metadata": { "description": "Installation guidée Hazim Systems (Google Cloud, Railway, plugins Claude)." }
+}
